@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Form</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="form.css">
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand">Google Form</a>
+            <button class="btn btn-warning view-btn" onclick="window.location.href='view.html'">View</button>
+
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <form id="userForm" class="p-4 shadow rounded bg-light">
+            
+            <div class="mb-3">
+                <label for="firstName" class="form-label">First Name:</label>
+                <input type="text" id="firstName" class="form-control" placeholder="First Name" name="first-name">
+            </div>
+
+            <div class="mb-3">
+                <label for="middleName" class="form-label">Middle Name:</label>
+                <input type="text" id="middleName" class="form-control" placeholder="Middle Name" name="middle-name">
+            </div>
+
+            <div class="mb-3">
+                <label for="lastName" class="form-label">Last Name:</label>
+                <input type="text" id="lastName" class="form-control" placeholder="Last Name" name="last-name">
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" id="email" class="form-control" placeholder="Email" name="email">
+            </div>
+
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone No:</label>
+                <input type="tel" id="phone" class="form-control" placeholder="Contact No" name="phone">
+            </div>
+
+            <div class="mb-3">
+                <label for="address" class="form-label">Address:</label>
+                <input type="text" id="address" class="form-control" placeholder="Address" name="address">
+            </div>
+
+            <div class="mb-3">
+                <label for="zipCode" class="form-label">Zip Code:</label>
+                <input type="text" id="zipCode" class="form-control" placeholder="Zip code" name="zip-code">
+            </div>
+
+            <button type="button" class="btn btn-primary w-100" onclick="saveData()">Submit Form</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var editData = JSON.parse(localStorage.getItem("editData"));
+            if (editData) {
+                document.getElementById("firstName").value = editData.firstName;
+                document.getElementById("middleName").value = editData.middleName || "";
+                document.getElementById("lastName").value = editData.lastName;
+                document.getElementById("email").value = editData.email;
+                document.getElementById("phone").value = editData.phone;
+                document.getElementById("address").value = editData.address;
+                document.getElementById("zipCode").value = editData.zipCode;
+                localStorage.removeItem("editData"); // Remove stored edit data after setting values
+            }
+        });
+    
+        function saveData() {
+    var firstName = document.getElementById("firstName").value.trim();
+    var middleName = document.getElementById("middleName").value.trim();
+    var lastName = document.getElementById("lastName").value.trim();
+    var email = document.getElementById("email").value.trim();
+    var phone = document.getElementById("phone").value.trim();
+    var address = document.getElementById("address").value.trim();
+    var zipCode = document.getElementById("zipCode").value.trim();
+    var submitButton = document.querySelector("button");
+
+    var data = {
+        action: "ADD",  // Ensure this action field is included
+        firstName,
+        middleName,
+        lastName,
+        email,
+        phone,
+        address,
+        zipCode
+    };
+
+    submitButton.disabled = true;
+    submitButton.innerText = "Submitting...";
+
+    fetch("https://script.google.com/macros/s/AKfycbxUMIaWNYdwMTmOJ4KNlnnqQ8AqDHSbX561ucYA56DJHGbVJ2WM4PTAfcxji3Xqvh6W/exec", {
+        
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    }).then(() => {
+        Swal.fire({
+            title: "Success!",
+            text: "Form submitted successfully!",
+            icon: "success",
+            confirmButtonText: "OK"
+        }).then(() => {
+            document.getElementById("userForm").reset();
+            submitButton.disabled = false;
+            submitButton.innerText = "Submit Form";
+            window.location.href = "view.html";
+        });
+
+    }).catch(error => {
+        console.error("Error:", error);
+        Swal.fire("Submission Failed", "An error occurred. Please try again later.", "error");
+        submitButton.disabled = false;
+        submitButton.innerText = "Submit Form";
+    });
+}
+
+    </script>
+    
+    
+</body>
+</html>

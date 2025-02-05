@@ -1,0 +1,67 @@
+.body{
+    background-color: #f4f4f4;
+}
+/* Custom Navbar Styling */
+.navbar {
+    background-color: #343a40 !important; /* Dark theme */
+    padding: 1% 2%;
+}
+.navbar-brand {
+    font-size: 120%;
+    font-weight: bold;
+    color: #ffffff !important;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.view-btn {
+    margin-left: auto;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 1% 2%;
+    border-radius: 10%;
+    transition: 0.3s ease-in-out;
+}
+/*  */
+
+#userForm {
+    background: #fff;
+    padding: 2%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 33%;
+    margin-top: 1%;
+    margin-left: 38%;
+    height: auto;
+}
+
+label {
+    font-weight: bold;
+}
+input {
+    width: 100%;
+    padding: 2%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-bottom: 6%;
+}
+
+.button {
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    padding: 3%;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+}
+
+.button:hover {
+    background: linear-gradient(135deg, #5a7bf5, #9058e3);
+    transform: scale(1.05);
+}
